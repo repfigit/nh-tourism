@@ -20,6 +20,12 @@ echo "If running the rails server then create or migrate existing database"
 
 if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
   ./bin/rails db:prepare
+  
+  # Seed database if destinations table is empty
+  if ! ./bin/rails runner "exit(Destination.exists? ? 0 : 1)" 2>/dev/null; then
+    echo "Seeding database..."
+    ./bin/rails db:seed
+  fi
 fi
 
 exec "${@}"

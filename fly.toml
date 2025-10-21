@@ -6,9 +6,6 @@ primary_region = 'ewr'
 
 [build]
 
-[deploy]
-  release_command = 'bin/rails fly:release'
-
 [env]
   RAILS_ENV = 'production'
   RAILS_SERVE_STATIC_FILES = 'true'
