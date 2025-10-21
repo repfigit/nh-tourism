@@ -8,7 +8,7 @@ class Admin::SessionsController < Admin::BaseController
 
   def new
     if first_admin?
-      flash.now[:notice] = 'Use admin/admin for the first login to the system'
+      flash.now[:notice] = 'Use admin/Cure8-Penpal4-Sapling0-Deputy1-Glory0 for the first login to the system'
     end
   end
 
@@ -21,7 +21,7 @@ class Admin::SessionsController < Admin::BaseController
       redirect_to admin_root_path
     else
       flash.now[:alert] = 'Username or password is wrong'
-      render 'new'
+      render 'new', status: :unprocessable_entity
     end
   end
 
@@ -37,10 +37,10 @@ class Admin::SessionsController < Admin::BaseController
     admin = Administrator.find_by(name: 'admin')
     if admin.nil?
       logger.info("System have no admins, create the first one")
-      admin = Administrator.new(name: 'admin', password: 'admin', role: 'super_admin')
+      admin = Administrator.new(name: 'admin', password: 'Cure8-Penpal4-Sapling0-Deputy1-Glory0', role: 'super_admin')
       admin.save!(validate: false)
     else
-      admin.update!(password: 'admin', password_confirmation: 'admin')
+      admin.update!(password: 'Cure8-Penpal4-Sapling0-Deputy1-Glory0', password_confirmation: 'Cure8-Penpal4-Sapling0-Deputy1-Glory0')
     end
   end
 
