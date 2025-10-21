@@ -7,7 +7,7 @@ primary_region = 'ewr'
 [build]
 
 [deploy]
-  release_command = './bin/rails db:prepare db:seed'
+  release_command = 'bin/rails db:prepare && bin/rails db:seed'
 
 [env]
   RAILS_ENV = 'production'
