@@ -1,0 +1,46 @@
+╔════════════════════════════════════════════════════════════════╗
+║           NH TOURISM - FLY.IO DEPLOYMENT COMMANDS             ║
+╚════════════════════════════════════════════════════════════════╝
+
+📋 QUICK DEPLOY (Copy-Paste This):
+─────────────────────────────────────────────────────────────────
+
+flyctl apps destroy nh-tourism-db --yes && \
+flyctl postgres create --name nh-tourism-db --region ewr --initial-cluster-size 1 && \
+sleep 30 && \
+flyctl postgres attach nh-tourism-db --app nh-tourism && \
+flyctl secrets list --app nh-tourism && \
+flyctl deploy
+
+─────────────────────────────────────────────────────────────────
+
+⚠️  IMPORTANT NOTES:
+  • When prompted during postgres create, press ENTER for defaults
+  • Wait for "Postgres cluster created" message before continuing
+  • Check that DATABASE_URL appears in secrets list
+  • If DATABASE_URL is missing, wait 60s and try attach again
+
+─────────────────────────────────────────────────────────────────
+
+✅ AFTER DEPLOYMENT:
+
+Live Site:  https://nh-tourism.fly.dev
+Admin URL:  https://nh-tourism.fly.dev/admin/login
+Username:   admin
+Password:   Cure8-Penpal4-Sapling0-Deputy1-Glory0
+
+─────────────────────────────────────────────────────────────────
+
+🔧 TROUBLESHOOTING:
+
+If deploy fails → Check logs:
+  flyctl logs --app nh-tourism
+
+If DATABASE_URL missing → Manually set:
+  flyctl secrets set DATABASE_URL="postgres://..." --app nh-tourism
+
+Full troubleshooting guide → See FLY_DATABASE_FIX.md
+
+─────────────────────────────────────────────────────────────────
+
+📦 Repository: https://github.com/repfigit/nh-tourism
