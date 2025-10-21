@@ -43,14 +43,14 @@ flyctl launch --no-deploy
 
 When prompted:
 - Choose app name: `nh-tourism` (or your preferred name)
-- Choose region: `bos` (Boston) - closest to New Hampshire
+- Choose region: `ewr` (Newark, NJ) - closest to New Hampshire
 - Don't add any services yet (we'll add PostgreSQL next)
 
 ## Step 5: Create PostgreSQL Database
 
 ```bash
 # Create a PostgreSQL cluster
-flyctl postgres create --name nh-tourism-db --region bos --initial-cluster-size 1
+flyctl postgres create --name nh-tourism-db --region ewr --initial-cluster-size 1
 
 # Attach it to your app
 flyctl postgres attach --app nh-tourism nh-tourism-db
