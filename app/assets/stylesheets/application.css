@@ -1,0 +1,818 @@
+@tailwind base;
+@tailwind components;
+
+/* Design System Components - Place between components and utilities for proper cascade */
+@layer components {
+
+  /*
+   * Design System Variables - Semantic naming to guide AI color selection
+   *
+   * Usage Guidelines:
+   * - Text colors: Use text-* series for high contrast and readability
+   * - Surface colors: Use surface-* series for backgrounds
+   * - Brand colors: Use primary/secondary for brand elements
+   * - Status colors: Use success/warning/danger/info for feedback
+   *
+   * ⚠️ Avoid direct use of neutral, prefer semantic variables
+   */
+  :root {
+    /* Primary: Mountain blue - inspired by White Mountains against clear sky */
+    --color-primary: 210 70% 50%;
+    --color-primary-light: 210 65% 65%;
+    --color-primary-dark: 210 75% 40%;
+
+    /* Secondary: Forest green - inspired by NH's lush forests */
+    --color-secondary: 145 50% 42%;
+    --color-secondary-light: 145 45% 55%;
+    --color-secondary-dark: 145 55% 32%;
+
+    /* Text colors - high contrast for readability */
+    --color-text-primary: 30 15% 20%;    /* Warm dark earth tone */
+    --color-text-secondary: 30 10% 35%;  /* Body text, descriptions */
+    --color-text-muted: 30 5% 55%;       /* Captions, helper text */
+
+    /* Surface colors - for backgrounds and borders */
+    --color-surface: 45 25% 98%;         /* Warm off-white, like morning mist */
+    --color-surface-elevated: 40 20% 94%; /* Cards, elevated surfaces */
+    --color-border: 40 15% 88%;          /* Borders, dividers */
+
+    /*  Neutral color - use only in special cases, avoid for text */
+    --color-neutral: 30 8% 55%;
+
+    /* Accent: Lake blue - inspired by pristine NH lakes */
+    --color-accent: 200 80% 45%;
+    --color-accent-light: 200 75% 60%;
+    --color-accent-dark: 200 85% 35%;
+
+    --color-success: 145 50% 42%;  /* Forest green */
+    --color-warning: 38 90% 50%;    /* Autumn gold */
+    --color-danger: 0 70% 50%;      /* Fall maple red */
+    --color-info: 200 80% 45%;      /* Lake blue */
+
+    --color-success-bg: 145 50% 96%;
+    --color-warning-bg: 38 90% 95%;
+    --color-danger-bg: 0 70% 96%;
+    --color-info-bg: 200 80% 96%;
+
+    --font-family-sans: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+    --font-family-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+    --border-radius-sm: 0.375rem;
+    --border-radius: 0.5rem;
+    --border-radius-md: 0.75rem;
+    --border-radius-lg: 1rem;
+    --border-radius-xl: 1.5rem;
+
+    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  }
+
+  /*
+   * Dark Mode - Comprehensive optimization for contrast and visual effects
+   * Follows WCAG AA standards with minimum 4.5:1 text contrast ratio
+   */
+  .dark {
+    /* Primary: Night sky over mountains */
+    --color-primary: 210 65% 65%;      /* Moonlit mountain blue */
+    --color-primary-light: 210 60% 75%; /* Light variant */
+    --color-primary-dark: 210 70% 55%; /* Dark variant */
+
+    /* Secondary: Night forest */
+    --color-secondary: 145 45% 55%;    /* Forest green for dark mode */
+    --color-secondary-light: 145 40% 65%;
+    --color-secondary-dark: 145 50% 45%;
+
+    /* Text colors - high contrast for readability */
+    --color-text-primary: 45 20% 92%;  /* Warm off-white */
+    --color-text-secondary: 40 15% 75%; /* Secondary text, still clear */
+    --color-text-muted: 35 10% 60%;     /* Muted text, moderate contrast */
+
+    /* Surface colors - layered dark system with warm undertones */
+    --color-surface: 30 10% 10%;       /* Dark with slight warm tone */
+    --color-surface-elevated: 30 8% 14%; /* Card background, slightly lighter */
+    --color-border: 30 6% 22%;         /* Borders, adequate contrast */
+
+    /* Accent: Moonlit lake */
+    --color-accent: 200 75% 60%;
+    --color-accent-light: 200 70% 70%;
+    --color-accent-dark: 200 80% 50%;
+
+    /* Status colors optimization for dark mode - brighter and more saturated */
+    --color-success: 145 45% 55%;      /* Forest green */
+    --color-warning: 38 90% 65%;       /* Autumn gold */
+    --color-danger: 0 70% 65%;         /* Fall red */
+    --color-info: 200 75% 60%;         /* Lake blue */
+
+    /* Status background colors - semi-transparent for dark mode */
+    --color-success-bg: 145 80% 50% / 0.15; /* Semi-transparent green background */
+    --color-warning-bg: 45 95% 60% / 0.15;  /* Semi-transparent yellow background */
+    --color-danger-bg: 0 85% 65% / 0.15;    /* Semi-transparent red background */
+    --color-info-bg: 200 95% 55% / 0.15;    /* Semi-transparent blue background */
+
+    /* Neutral color adjustment for dark mode */
+    --color-neutral: 0 0% 70%;         /* Brighter neutral for dark backgrounds */
+
+    /* Shadows for dark mode - softer to avoid being too heavy */
+    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.5);
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
+    --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+    --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.5);
+    --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.7);
+  }
+
+  /* Design System Components */
+  .btn {
+    @apply inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    border-radius: var(--border-radius);
+    font-family: var(--font-family-sans);
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+    border: none;
+    outline: none;
+  }
+
+  /* Button disabled state */
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Button loading state */
+  .btn.loading {
+    cursor: wait;
+    pointer-events: none;
+    position: relative;
+  }
+
+  /* Button focus styles */
+  .btn:focus-visible {
+    outline: 2px solid hsl(var(--color-primary));
+    outline-offset: 2px;
+  }
+
+  /* Button active state */
+  .btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  .btn-primary {
+    @apply btn px-4 py-2 text-sm text-white;
+    background-color: hsl(var(--color-primary));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: hsl(var(--color-primary-dark));
+    box-shadow: var(--shadow);
+  }
+
+  .btn-primary:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--color-primary) / 0.3);
+  }
+
+  .btn-primary:disabled {
+    background-color: hsl(var(--color-primary) / 0.5);
+    color: hsl(0 0% 100% / 0.7);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-secondary {
+    @apply btn px-4 py-2 text-sm text-white;
+    background-color: hsl(var(--color-secondary));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background-color: hsl(var(--color-secondary-dark));
+    box-shadow: var(--shadow);
+  }
+
+  .btn-secondary:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--color-secondary) / 0.3);
+  }
+
+  .btn-secondary:disabled {
+    background-color: hsl(var(--color-secondary) / 0.5);
+    color: hsl(0 0% 100% / 0.7);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-neutral {
+    @apply btn px-4 py-2 text-sm text-white;
+    background-color: hsl(var(--color-neutral));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-neutral:hover:not(:disabled) {
+    background-color: hsl(var(--color-neutral));
+    box-shadow: var(--shadow);
+  }
+
+  .btn-neutral:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--color-neutral) / 0.3);
+  }
+
+  .btn-neutral:disabled {
+    background-color: hsl(var(--color-neutral) / 0.5);
+    color: hsl(0 0% 100% / 0.7);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-success {
+    @apply btn px-4 py-2 text-sm text-white;
+    background-color: hsl(var(--color-success));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-success:hover:not(:disabled) {
+    opacity: 0.9;
+    box-shadow: var(--shadow);
+  }
+
+  .btn-success:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--color-success) / 0.3);
+  }
+
+  .btn-success:disabled {
+    background-color: hsl(var(--color-success) / 0.5);
+    color: hsl(0 0% 100% / 0.7);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-warning {
+    @apply btn px-4 py-2 text-sm text-white;
+    background-color: hsl(var(--color-warning));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-warning:hover:not(:disabled) {
+    opacity: 0.9;
+    box-shadow: var(--shadow);
+  }
+
+  .btn-warning:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--color-warning) / 0.3);
+  }
+
+  .btn-warning:disabled {
+    background-color: hsl(var(--color-warning) / 0.5);
+    color: hsl(0 0% 100% / 0.7);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-danger {
+    @apply btn px-4 py-2 text-sm text-white;
+    background-color: hsl(var(--color-danger));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-danger:hover:not(:disabled) {
+    opacity: 0.9;
+    box-shadow: var(--shadow);
+  }
+
+  .btn-danger:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--color-danger) / 0.3);
+  }
+
+  .btn-danger:disabled {
+    background-color: hsl(var(--color-danger) / 0.5);
+    color: hsl(0 0% 100% / 0.7);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-accent {
+    @apply btn px-4 py-2 text-sm text-white;
+    background-color: hsl(var(--color-secondary));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-accent:hover:not(:disabled) {
+    background-color: hsl(var(--color-secondary-dark));
+    box-shadow: var(--shadow);
+  }
+
+  .btn-accent:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--color-secondary) / 0.3);
+  }
+
+  .btn-accent:disabled {
+    background-color: hsl(var(--color-secondary) / 0.5);
+    color: hsl(0 0% 100% / 0.7);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-ghost {
+    @apply btn px-4 py-2 text-sm text-secondary;
+    background-color: transparent;
+    border: 1px solid hsl(var(--color-border));
+  }
+
+  .btn-ghost:hover:not(:disabled) {
+    background-color: hsl(var(--color-surface-elevated));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-ghost:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--color-text-secondary) / 0.3);
+  }
+
+  .btn-ghost:disabled {
+    border-color: hsl(var(--color-border) / 0.5);
+    opacity: 0.5;
+    background-color: transparent;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .dark .btn-ghost {
+    border-color: hsl(var(--color-border));
+  }
+
+  .dark .btn-ghost:hover:not(:disabled) {
+    background-color: hsl(var(--color-surface-elevated));
+  }
+
+  .dark .btn-ghost:disabled {
+    border-color: hsl(var(--color-border) / 0.3);
+    background-color: transparent;
+  }
+
+  .btn-outline {
+    @apply btn px-4 py-2 text-sm;
+    background-color: transparent;
+    border: 1px solid hsl(var(--color-border));
+    color: hsl(var(--color-text-primary));
+  }
+
+  .btn-outline:hover:not(:disabled) {
+    background-color: hsl(var(--color-surface-elevated));
+    border-color: hsl(var(--color-text-secondary));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-outline:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--color-text-secondary) / 0.3);
+  }
+
+  .btn-outline:disabled {
+    border-color: hsl(var(--color-border) / 0.5);
+    color: hsl(var(--color-text-muted));
+    background-color: transparent;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .dark .btn-outline {
+    border-color: hsl(var(--color-border));
+    color: hsl(var(--color-text-secondary));
+  }
+
+  .dark .btn-outline:hover:not(:disabled) {
+    background-color: hsl(var(--color-surface-elevated));
+    border-color: hsl(var(--color-text-primary));
+  }
+
+  .btn-outline-primary {
+    @apply btn px-4 py-2 text-sm;
+    background-color: transparent;
+    border: 1px solid hsl(var(--color-primary));
+    color: hsl(var(--color-primary));
+  }
+
+  .btn-outline-primary:hover:not(:disabled) {
+    background-color: hsl(var(--color-primary-light) / 0.1);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-outline-primary:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--color-primary) / 0.3);
+  }
+
+  .btn-outline-primary:disabled {
+    border-color: hsl(var(--color-primary) / 0.3);
+    color: hsl(var(--color-primary) / 0.3);
+    background-color: transparent;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-xs {
+    @apply text-xs px-2 py-1;
+    border-radius: var(--border-radius-sm);
+  }
+
+  .btn-sm {
+    @apply text-sm px-3 py-1.5;
+    border-radius: var(--border-radius);
+  }
+
+  .btn-md {
+    @apply text-sm px-4 py-2;
+    border-radius: var(--border-radius);
+  }
+
+  .btn-lg {
+    @apply text-base px-6 py-3;
+    border-radius: var(--border-radius-lg);
+  }
+
+  .btn-xl {
+    @apply text-lg px-8 py-4;
+    border-radius: var(--border-radius-xl);
+  }
+  .card {
+    @apply px-4 py-4 my-4 overflow-hidden;
+    background-color: hsl(var(--color-surface));
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid hsl(var(--color-surface-elevated));
+  }
+
+  .dark .card {
+    background-color: hsl(var(--color-surface-elevated));
+    border-color: hsl(var(--color-border));
+  }
+
+  .card-elevated {
+    @apply card;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .card-flat {
+    @apply card;
+    box-shadow: none;
+    border: 0;
+    background-color: hsl(var(--color-surface-elevated));
+  }
+
+  .dark .card-flat {
+    background-color: hsl(var(--color-surface));
+  }
+
+  .card-header {
+    @apply px-6 py-4;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    border-bottom: 1px solid hsl(var(--color-surface-elevated));
+    background-color: hsl(var(--color-surface-elevated));
+  }
+
+  .dark .card-header {
+    border-bottom-color: hsl(var(--color-border));
+    background-color: hsl(var(--color-surface));
+  }
+
+  .card-body {
+    @apply px-6 py-4;
+  }
+
+  .card-footer {
+    @apply px-6 py-4;
+    border-top: 1px solid hsl(var(--color-surface-elevated));
+    background-color: hsl(var(--color-surface-elevated));
+  }
+
+  .dark .card-footer {
+    border-top-color: hsl(var(--color-border));
+    background-color: hsl(var(--color-surface));
+  }
+
+  .alert {
+    @apply p-4 text-sm font-medium;
+    border-radius: var(--border-radius-lg);
+    border: 1px solid;
+  }
+
+  .alert a {
+    text-decoration: underline;
+  }
+
+  .alert-success {
+    @apply alert;
+    background-color: hsl(var(--color-success-bg));
+    border-color: hsl(var(--color-success));
+    color: hsl(var(--color-text-primary));
+  }
+
+  .dark .alert-success {
+    background-color: hsl(var(--color-success) / 0.2);
+    border-color: hsl(var(--color-success));
+    color: hsl(var(--color-success));
+  }
+
+  .alert-warning {
+    @apply alert;
+    background-color: hsl(var(--color-warning-bg));
+    border-color: hsl(var(--color-warning));
+    color: hsl(var(--color-text-primary));
+  }
+
+  .dark .alert-warning {
+    background-color: hsl(var(--color-warning) / 0.2);
+    border-color: hsl(var(--color-warning));
+    color: hsl(var(--color-warning));
+  }
+
+  .alert-danger {
+    @apply alert;
+    background-color: hsl(var(--color-danger-bg));
+    border-color: hsl(var(--color-danger));
+    color: hsl(var(--color-text-primary));
+  }
+
+  .dark .alert-danger {
+    background-color: hsl(var(--color-danger) / 0.2);
+    border-color: hsl(var(--color-danger));
+    color: hsl(var(--color-danger));
+  }
+
+  .alert-info {
+    @apply alert;
+    background-color: hsl(var(--color-info-bg));
+    border-color: hsl(var(--color-info));
+    color: hsl(var(--color-text-primary));
+  }
+
+  .dark .alert-info {
+    background-color: hsl(var(--color-info) / 0.2);
+    border-color: hsl(var(--color-info));
+    color: hsl(var(--color-info));
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 text-xs font-medium;
+    border-radius: 9999px; /* full */
+  }
+
+  .badge-primary {
+    @apply badge;
+    background-color: hsl(var(--color-primary-light) / 0.2);
+    color: hsl(var(--color-primary));
+  }
+
+  .dark .badge-primary {
+    background-color: hsl(var(--color-primary) / 0.3);
+    color: hsl(var(--color-primary-light));
+  }
+
+  .badge-secondary {
+    @apply badge;
+    background-color: hsl(var(--color-secondary-light) / 0.2);
+    color: hsl(var(--color-secondary));
+  }
+
+  .dark .badge-secondary {
+    background-color: hsl(var(--color-secondary) / 0.3);
+    color: hsl(var(--color-secondary-light));
+  }
+
+  .badge-success {
+    @apply badge;
+    background-color: hsl(var(--color-success-bg));
+    color: hsl(var(--color-success));
+  }
+
+  .dark .badge-success {
+    background-color: hsl(var(--color-success) / 0.3);
+    color: hsl(var(--color-success));
+  }
+
+  .badge-warning {
+    @apply badge;
+    background-color: hsl(var(--color-warning-bg));
+    color: hsl(var(--color-warning));
+  }
+
+  .dark .badge-warning {
+    background-color: hsl(var(--color-warning) / 0.3);
+    color: hsl(var(--color-warning));
+  }
+
+  .badge-danger {
+    @apply badge;
+    background-color: hsl(var(--color-danger-bg));
+    color: hsl(var(--color-danger));
+  }
+
+  .dark .badge-danger {
+    background-color: hsl(var(--color-danger) / 0.3);
+    color: hsl(var(--color-danger));
+  }
+
+  .badge-neutral {
+    @apply badge;
+    background-color: hsl(var(--color-surface-elevated));
+    color: hsl(var(--color-text-primary));
+  }
+
+  .dark .badge-neutral {
+    background-color: hsl(var(--color-surface-elevated));
+    color: hsl(var(--color-text-secondary));
+  }
+
+  .form-input {
+    @apply w-full px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200;
+    border: 1px solid hsl(var(--color-surface-elevated));
+    border-radius: var(--border-radius);
+    background-color: hsl(var(--color-surface));
+    color: hsl(var(--color-text-primary));
+  }
+
+  .form-input::placeholder {
+    color: hsl(var(--color-neutral));
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: hsl(var(--color-primary));
+    box-shadow: 0 0 0 3px hsl(var(--color-primary) / 0.1);
+  }
+
+  .dark .form-input {
+    border-color: hsl(var(--color-border));
+    background-color: hsl(var(--color-surface-elevated));
+    color: hsl(var(--color-text-primary));
+  }
+
+  .dark .form-input::placeholder {
+    color: hsl(var(--color-text-muted));
+  }
+
+  .form-textarea {
+    @apply form-input resize-y;
+  }
+
+  .form-select {
+    @apply form-input cursor-pointer;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium mb-1;
+    color: hsl(var(--color-text-primary));
+  }
+
+  .dark .form-label {
+    color: hsl(var(--color-text-secondary));
+  }
+
+  .form-error {
+    @apply text-sm mt-1;
+    color: hsl(var(--color-danger));
+  }
+
+  .form-help {
+    @apply text-sm mt-1;
+    color: hsl(var(--color-neutral));
+  }
+
+  .table {
+    @apply w-full text-sm text-left;
+    color: hsl(var(--color-neutral));
+  }
+
+  .table-header {
+    @apply text-xs uppercase;
+    color: hsl(var(--color-text-primary));
+    background-color: hsl(var(--color-surface-elevated));
+  }
+
+  .dark .table-header {
+    color: hsl(var(--color-text-secondary));
+    background-color: hsl(var(--color-surface-elevated));
+  }
+
+  .table-row {
+    background-color: hsl(var(--color-surface));
+    border-bottom: 1px solid hsl(var(--color-surface-elevated));
+  }
+
+  .table-row:hover {
+    background-color: hsl(var(--color-surface-elevated));
+  }
+
+  .dark .table-row {
+    background-color: hsl(var(--color-surface-elevated));
+    border-bottom-color: hsl(var(--color-border));
+  }
+
+  .dark .table-row:hover {
+    background-color: hsl(var(--color-surface));
+  }
+
+  .table-cell {
+    @apply px-6 py-4;
+  }
+
+  .table-header-cell {
+    @apply table-cell font-medium;
+  }
+
+  .loading-spinner {
+    @apply animate-spin rounded-full border-2;
+    border-color: hsl(var(--color-surface-elevated));
+    border-top-color: hsl(var(--color-primary));
+  }
+
+  .skeleton {
+    @apply animate-pulse;
+    background-color: hsl(var(--color-surface-elevated));
+    border-radius: var(--border-radius);
+  }
+
+  .dark .skeleton {
+    background-color: hsl(var(--color-surface-elevated));
+  }
+
+  .field_with_errors {
+    @apply inline-block w-full;
+  }
+
+  .field_with_errors input,
+  .field_with_errors textarea,
+  .field_with_errors select {
+    border-color: hsl(var(--color-danger)) !important;
+  }
+
+  .field_with_errors input:focus,
+  .field_with_errors textarea:focus,
+  .field_with_errors select:focus {
+    box-shadow: 0 0 0 3px hsl(var(--color-danger) / 0.1) !important;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .transition-default {
+    @apply transition-all duration-200 ease-in-out;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none;
+  }
+
+  .focus-ring:focus {
+    box-shadow: 0 0 0 3px hsl(var(--color-primary) / 0.3);
+  }
+
+  /*
+   * CONTAINER SYSTEM
+   * 
+   * Responsive container classes with consistent max-width and padding.
+   * Feel free to modify as needed, but please don't remove.
+   * 
+   * .container-xl  - Recommended for navbar, headers, list pages
+   * .container-lg  - Detail pages, dashboard, content display  
+   * .container-md  - Form pages, create/edit pages
+   * .container-sm  - Login, registration, small forms
+   */
+
+  .container-sm {
+    @apply max-w-2xl mx-auto px-4 sm:px-6;
+  }
+
+  .container-md {
+    @apply max-w-4xl mx-auto px-4 sm:px-6;
+  }
+
+  .container-lg {
+    @apply max-w-6xl mx-auto px-4 sm:px-6;
+  }
+
+  .container-xl {
+    @apply max-w-7xl mx-auto px-4 sm:px-6;
+  }
+
+  /* write your own components here */
+
+} /* End of @layer components */
+
+@tailwind utilities;
+

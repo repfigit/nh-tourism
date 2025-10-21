@@ -1,0 +1,16 @@
+<div class="relative h-96 bg-primary/10">
+  <img src="<%= @destination.image_url %>" alt="<%= @destination.name %>" class="w-full h-full object-cover">
+</div>
+
+<div class="container mx-auto px-4 py-12">
+  <div class="max-w-4xl mx-auto">
+    <%= link_to "← Back to Destinations", destinations_path, class: "text-primary hover:text-primary-dark mb-4 inline-block" %>
+    
+    <h1 class="text-5xl font-bold text-text-primary mb-4"><%= @destination.name %></h1>
+    <p class="text-xl text-text-muted mb-8"><%= @destination.location %></p>
+    
+    <div class="prose max-w-none text-text-secondary">
+      <%= simple_format @destination.description %>
+    </div>
+  </div>
+</div>

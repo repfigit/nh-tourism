@@ -1,0 +1,99 @@
+import BaseChannelController from "./base_channel_controller"
+
+/**
+ * 🏗️ <%= file_name.camelize %> Controller - Handles WebSocket + UI for <%= file_name.humanize.downcase %>
+ * Extends BaseChannelController for error reporting and WebSocket management
+ *
+ * ADD YOUR UI HERE:
+ * - static targets = ["messageInput", "messagesContainer", "sendButton"]
+ * - Add UI methods like sendMessage(), displayMessage()
+ * - Override channelReceived() to handle real-time updates
+ *
+ * DON'T create separate controllers - extend this one!
+ * HTML: <div data-controller="<%= file_name.dasherize %>">...</div>
+ */
+export default class extends BaseChannelController {
+  static targets = [
+    // 💡 EXAMPLE: Common targets for your UI
+    // "messageInput",     // <input data-<%= file_name.dasherize %>-target="messageInput">
+    // "messagesContainer" // <div data-<%= file_name.dasherize %>-target="messagesContainer">
+  ]
+
+  static values = {
+    // Add your values here, e.g.:
+    // roomId: String,
+    // userId: String
+  }
+
+  // Declare your targets and values
+  // Must-having target
+  // declare readonly messageInputTarget: HTMLInputElement
+  // Optional target
+  // declare readonly hasMessagesContainerTarget: boolean
+  // declare readonly messagesContainerTarget: HTMLElement
+  // declare readonly roomIdValue: string
+
+  connect(): void {
+    console.log("<%= file_name.camelize %> controller connected")
+
+    // Create subscription using base class method
+    this.createSubscription("<%= channel_name %>", {
+      // Add subscription parameters here, e.g.:
+      // room_id: this.roomIdValue
+    })
+  }
+
+  disconnect(): void {
+    console.log("<%= file_name.camelize %> controller disconnected")
+    // Destroy subscription using base class method
+    this.destroySubscription()
+  }
+
+  // Override: Called when channel connects (from base class)
+  protected channelConnected(): void {
+    // Add your connection logic here
+    // Example: Enable send button, show connected status
+  }
+
+  // Override: Called when channel disconnects (from base class)
+  protected channelDisconnected(): void {
+    // Add your disconnection logic here
+    // Example: Disable send button, show disconnected status
+  }
+
+  // ⚡ AUTO-ROUTED HANDLERS: Base controller routes messages by type
+  // Server sends: { type: 'chunk', content: 'text' } → calls handleChunk(data)
+  //
+  // protected handleChunk(data: any): void {
+  //   console.log('Chunk received:', data.content)
+  // }
+
+  // 🎮 ADD YOUR UI METHODS HERE
+  // Example: data-action="click-><%= file_name.dasherize %>#sendAction"
+  // sendAction(event: Event): void {
+  //   if (!this.connected) return
+  //   this.subscription?.perform('action_name', { param: 'value' })
+  // }
+
+  // ⚡ STREAMING: Handle character stream (LLM, logs, real-time text)
+  // private handleTextChunk(chunk: string): void {
+  //   if (this.hasOutputTarget) {
+  //     this.outputTarget.textContent += chunk
+  //     // Auto-scroll to bottom
+  //     this.outputTarget.scrollTop = this.outputTarget.scrollHeight
+  //   }
+  // }
+
+  // 📨 FORMS: Use Turbo + Turbo Streams (no manual code needed)
+  // Forms automatically:
+  // - Submit via AJAX (Turbo Drive)
+  // - Receive format.turbo_stream response
+  // - Update DOM via Turbo Streams
+  // Use Stimulus only for UI interactions (validation, show/hide, etc.)
+
+  // 💡 UI HELPER METHODS - Add methods to update your interface
+  // private handleMessage(data: any): void {
+  //   console.log('Message received:', data)
+  //   // Update UI based on message data
+  // }
+}
