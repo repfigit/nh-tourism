@@ -144,6 +144,45 @@ flyctl secrets list
 
 ## Troubleshooting
 
+### Common Issue: DATABASE_URL Not Set / Database Connection Failed
+
+**Symptom**: Deployment fails with error:
+```
+ActiveRecord::ConnectionNotEstablished: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed
+```
+
+**Cause**: `DATABASE_URL` secret is not set, or database is stuck in "pending" state.
+
+**Solution**: See detailed fix in `FLY_DATABASE_FIX.md` or follow these steps:
+
+```bash
+# 1. Check database status
+flyctl postgres list
+
+# 2. If database is stuck in "pending", destroy and recreate:
+flyctl apps destroy nh-tourism-db --yes
+flyctl postgres create --name nh-tourism-db --region ewr --initial-cluster-size 1
+
+# 3. Wait for database to be "running" (check with: flyctl postgres list)
+
+# 4. Attach database
+flyctl postgres attach nh-tourism-db --app nh-tourism
+
+# 5. Verify DATABASE_URL is set
+flyctl secrets list --app nh-tourism
+
+# 6. Deploy
+flyctl deploy
+```
+
+**Alternative**: Use Managed Postgres (more stable):
+```bash
+flyctl apps destroy nh-tourism-db --yes
+flyctl mpg create --name nh-tourism-db --region ewr --initial-cluster-size 1
+flyctl postgres attach nh-tourism-db --app nh-tourism
+flyctl deploy
+```
+
 ### If deployment fails:
 
 1. Check logs:
@@ -155,11 +194,26 @@ flyctl secrets list
    ```bash
    flyctl secrets list
    ```
+   
+   **Required secrets**:
+   - `DATABASE_URL` (auto-set by postgres attach)
+   - `SECRET_KEY_BASE`
+   - `PUBLIC_HOST`
+   - `RAILS_ENV` (optional, defaults to production)
 
 3. Verify database connection:
    ```bash
    flyctl ssh console -C "rails runner 'puts ActiveRecord::Base.connection.active?'"
    ```
+
+### Region "bos" Deprecated Error:
+
+**Symptom**: Error message: "Region bos is deprecated"
+
+**Solution**: The configuration has been updated to use `ewr` (Newark, NJ). If you see this error, make sure you have the latest version from GitHub:
+```bash
+git pull origin main
+```
 
 ### Reset the database:
 
