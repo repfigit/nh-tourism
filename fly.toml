@@ -19,7 +19,7 @@ primary_region = 'ewr'
   force_https = true
   auto_stop_machines = 'suspend'  # Fast wake instead of full stop
   auto_start_machines = true
-  min_machines_running = 1  # Keep 1 machine always running for instant response
+  min_machines_running = 0  # Machines suspend when idle to save costs
   processes = ['app']
 
   [http_service.concurrency]
