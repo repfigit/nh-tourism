@@ -17,9 +17,9 @@ primary_region = 'ewr'
 [http_service]
   internal_port = 3000
   force_https = true
-  auto_stop_machines = 'stop'
+  auto_stop_machines = 'suspend'  # Fast wake instead of full stop
   auto_start_machines = true
-  min_machines_running = 0
+  min_machines_running = 1  # Keep 1 machine always running for instant response
   processes = ['app']
 
   [http_service.concurrency]
@@ -27,8 +27,16 @@ primary_region = 'ewr'
     hard_limit = 1000
     soft_limit = 1000
 
+  # Health check to keep machine alive
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    timeout = "5s"
+    path = "/"
+
 [[vm]]
-  memory = '512mb'
+  memory = '1024mb'  # Increased from 512mb for better performance
   cpu_kind = 'shared'
   cpus = 1
 
