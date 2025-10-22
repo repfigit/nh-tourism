@@ -16,7 +16,7 @@ primary_region = 'ewr'
   force_https = true
   auto_stop_machines = 'suspend'  # Fast wake instead of full stop
   auto_start_machines = true
-  min_machines_running = 0  # Machines suspend when idle to save costs
+  min_machines_running = 1  # Keep at least 1 machine running to prevent cold starts
   processes = ['app']
 
   [http_service.concurrency]
@@ -24,13 +24,13 @@ primary_region = 'ewr'
     hard_limit = 1000
     soft_limit = 1000
 
-  # Health check to keep machine alive
-  [[http_service.checks]]
-    grace_period = "10s"
-    interval = "30s"
-    method = "GET"
-    timeout = "5s"
-    path = "/"
+  # Health check to keep machine alive - temporarily disabled due to regional connectivity issues
+  # [[http_service.checks]]
+  #   grace_period = "10s"
+  #   interval = "30s"
+  #   method = "GET"
+  #   timeout = "5s"
+  #   path = "/health"
 
 [[vm]]
   memory = '1024mb'  # Increased from 512mb for better performance

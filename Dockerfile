@@ -20,9 +20,16 @@ WORKDIR /rails
 # Copy application code
 COPY --chown=ruby:ruby . .
 
+# Fix line endings for bin files (Windows CRLF to Unix LF) and make them executable
+USER root
+RUN find ./bin -type f -exec sed -i 's/\r$//' {} \; && \
+    chmod +x ./bin/*
+USER ruby
+
 RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile
 
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+# Override the base image ENTRYPOINT
+ENTRYPOINT []
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE ${PORT}
